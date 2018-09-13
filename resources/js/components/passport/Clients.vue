@@ -21,9 +21,16 @@
 
             <div class="card-body">
                 <!-- Current Clients -->
-                <p class="mb-0" v-if="clients.length === 0">
+                <b-loading
+                    variant="RotateSquare2"
+                    cover
+                    v-if="isBusy"
+                    >
+                    Loading
+                </b-loading>
+                <b-alert  variant="danger" class="mb-0" :show="clients.length === 0 && !isBusy">
                     You have not created any OAuth clients.
-                </p>
+                </b-alert>
                 <b-table v-if="clients.length > 0" show-empty class="mt-2 mb-2 table-outline" responsive hover :items="clients" :fields="fields" head-variant="light" :busy.sync="isBusy">
                     <template slot="name" slot-scope="row">
                         <div>{{ row.item.name }}</div>

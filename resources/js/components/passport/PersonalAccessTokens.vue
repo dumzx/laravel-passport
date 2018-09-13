@@ -22,9 +22,9 @@
 
                 <div class="card-body">
                     <!-- No Tokens Notice -->
-                    <p class="mb-0" v-if="tokens.length === 0">
+                    <b-alert  variant="danger" class="mb-0" :show="tokens.length === 0 && !isBusy">
                         You have not created any personal access tokens.
-                    </p>
+                    </b-alert>
 
                     <!-- Personal Access Tokens -->
                     <b-table v-if="tokens.length > 0" show-empty class="mt-2 mb-2 table-outline" responsive hover :items="tokens" :fields="fields" head-variant="light" :busy.sync="isBusy">

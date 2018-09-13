@@ -14,6 +14,11 @@ window.Vue = require('vue');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+import _ from 'lodash';
+import BootstrapVue from 'bootstrap-vue'
+import Notifications from 'vue-notification'
+import VueSweetalert2 from 'vue-sweetalert2'
+import Loading from './components/Loading'
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
@@ -32,9 +37,10 @@ Vue.component(
     require('./components/passport/PersonalAccessTokens.vue')
 );
 
-import BootstrapVue from 'bootstrap-vue'
-
-Vue.use(BootstrapVue);
+Vue.use(BootstrapVue)
+Vue.use(VueSweetalert2)
+Vue.use(Notifications)
+Vue.component('b-loading', Loading)
 
 const app = new Vue({
     el: '#app'

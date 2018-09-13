@@ -34,6 +34,22 @@ Route::middleware(['auth','verified'])->prefix('dashboard')->group(function () {
     })->name('authorized-clients');
 });
 
+Route::get('/ping',function(){
+    $data = [
+        'status' => 200,
+        'success' => true,
+        'data' => [
+            'name' => config('app.name'),
+            'env' => config('app.env'),
+            'debug' => config('app.debug'),
+            'time' => \Carbon\Carbon::now(),
+        ],
+
+    ];
+    return response()->json($data);
+});
+
+
 Route::get('/redirect', function () {
 
     $query = http_build_query([
@@ -47,7 +63,10 @@ Route::get('/redirect', function () {
 });
 
 Route::get('/callback', function () {
-    $http = new GuzzleHttp\Client;
+    $http = new GuzzleHttp\Client();
+
+    //$response = $http->request('GET', '/');
+    //$r = $http->get('/');
     dd($http,request()->get('code'),url('oauth/token'));
     $response = $http->post(url('oauth/token'), [
         'form_params' => [

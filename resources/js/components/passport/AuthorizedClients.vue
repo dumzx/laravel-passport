@@ -6,13 +6,16 @@
 
 <template>
     <div>
-        <div v-if="tokens.length > 0">
+        <div>
             <div class="card card-default">
                 <div class="card-header">Authorized Applications</div>
 
                 <div class="card-body">
+                    <b-alert  variant="danger" class="mb-0" :show="tokens.length === 0 && !isBusy">
+                        You have not authorized any applications.
+                    </b-alert>
                     <!-- Authorized Tokens -->
-                    <table class="table table-borderless mb-0">
+                    <table class="table table-borderless mb-0"  v-if="tokens.length > 0">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -57,6 +60,7 @@
          */
         data() {
             return {
+                isBusy: false,
                 tokens: []
             };
         },
@@ -87,10 +91,14 @@
              * Get all of the authorized tokens for the user.
              */
             getTokens() {
+                this.isBusy = true
                 axios.get('/oauth/tokens')
                         .then(response => {
                             this.tokens = response.data;
-                        });
+                        })
+                    .then(() => {
+                        this.isBusy = false
+                    });
             },
 
             /**
